@@ -1,18 +1,21 @@
 xomap = [["y3 ", "( )", "( )", "( )"], [" 2 ", "( )", "( )", "( )"], [" 1 ", "( )", "( )", "( )"], ["   ", " 1 ", " 2 ", " 3x"]]
+# создали матрицу
 
-first = input("Who is first? X or O: ")
+first = input("Who is first? X or O: ")   
 if first == "x":
     first = "(X)"
     second = "(O)"
 elif first == "o":
     first = "(O)"
     second = "(X)"
+# определяем выбор первого игрока
 
-def mapxo():
+def mapxo(): 
     for i in range(4):
         for j in range(4):
             print(xomap[i][j], end="")
         print()
+# рисуем поле
 
 def xodo(x, y, lane):
     if x == 1 and y == 1:
@@ -42,7 +45,7 @@ def xodo(x, y, lane):
     elif x == 3 and y == 3:
         xomap[0][3] = lane
         return mapxo()
-
+# заполняем поле
 
 
 
