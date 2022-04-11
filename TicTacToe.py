@@ -1,13 +1,24 @@
+import re
+
+
 xomap = [["y3 ", "( )", "( )", "( )"], [" 2 ", "( )", "( )", "( )"], [" 1 ", "( )", "( )", "( )"], ["   ", " 1 ", " 2 ", " 3x"]]
 # создали матрицу
 
-first = input("Who is first? X or O: ")   
-if first == "x":
-    first = "(X)"
-    second = "(O)"
-elif first == "o":
-    first = "(O)"
-    second = "(X)"
+first = input("Who is first? x or o: ")   
+while True:
+    if first == "x":
+        first = "(X)"
+        second = "(O)"
+        break
+    else:
+        first = input("Who is first? x or o: ")
+while True:
+    if first == "o":
+        first = "(O)"
+        second = "(X)"
+        break
+    else:
+        first = input("Who is first? x or o: ")
 # определяем выбор первого игрока
 
 def mapxo(): 
@@ -47,11 +58,32 @@ def xodo(x, y, lane):
         return mapxo()
 # заполняем поле
 
-
+def inp(x, y):
+    while True:
+        x = input("x:")
+        if x == "1" or x == "2" or x == "3":
+            x = int(x)
+            break
+        else:
+            print("Select a coordinate х: 1, 2 or 3!")
+            mapxo()
+    while True:
+        y = input("y:")
+        if y == "1" or y == "2" or y == "3":
+            y = int(y)
+            break
+        else:
+            print("Select a coordinate y: 1, 2 or 3!")
+            mapxo()
+    return x, y
+# проверка правильности ввода координат
 
 mapxo()
-for i in range(9):
-    xodo(int(input("x:")), int(input("y:")), first)
-    print()
-    xodo(int(input("x:")), int(input("y:")), second)
-    print()
+
+x, y = inp(None, None)
+print(x, y)
+
+xodo(x, y, first)
+print()
+xodo(x, y, second)
+print()
