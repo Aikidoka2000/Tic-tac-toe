@@ -10,10 +10,7 @@ while True:
         first = "(X)"
         second = "(O)"
         break
-    else:
-        first = input("Who is first? x or o: ")
-while True:
-    if first == "o":
+    elif first == "o":
         first = "(O)"
         second = "(X)"
         break
