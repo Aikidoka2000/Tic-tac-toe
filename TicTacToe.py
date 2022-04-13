@@ -1,83 +1,58 @@
-xomap = [["y3 ", "( )", "( )", "( )"], [" 2 ", "( )", "( )", "( )"], [" 1 ", "( )", "( )", "( )"], ["   ", " 1 ", " 2 ", " 3x"]]
-# создали матрицу
+print(" Игра Крестики-нолики ")
 
-first = input("Who is first? x or o: ")   
-while True:
-    if first == "x":
-        first = "(X)"
-        second = "(O)"
-        break
-    elif first == "o":
-        first = "(O)"
-        second = "(X)"
-        break
-    else:
-        first = input("Who is first? x or o: ")
-# определяем выбор первого игрока
+board = list(range(1,10))
 
-def mapxo(): 
-    for i in range(4):
-        for j in range(4):
-            print(xomap[i][j], end="")
-        print()
-# рисуем поле
+def draw_board(board):
+   print("-" * 13)
+   for i in range(3):
+      print("|", board[0+i*3], "|", board[1+i*3], "|", board[2+i*3], "|")
+      print("-" * 13)
 
-def xodo(x, y, lane):
-    if x == 1 and y == 1:
-        xomap[2][1] = lane
-        return mapxo()
-    elif x == 1 and y == 2:
-        xomap[1][1] = lane
-        return mapxo()
-    elif x == 1 and y == 3:
-        xomap[0][1] = lane
-        return mapxo()
-    elif x == 2 and y == 1:
-        xomap[2][2] = lane
-        return mapxo()
-    elif x == 2 and y == 2:
-        xomap[1][2] = lane
-        return mapxo()
-    elif x == 2 and y == 3:
-        xomap[0][2] = lane
-        return mapxo()
-    elif x == 3 and y == 1:
-        xomap[2][3] = lane
-        return mapxo()
-    elif x == 3 and y == 2:
-        xomap[1][3] = lane
-        return mapxo()
-    elif x == 3 and y == 3:
-        xomap[0][3] = lane
-        return mapxo()
-# заполняем поле
+def take_input(player_token):
+   valid = False
+   while not valid:
+      player_answer = input("Куда поставим " + player_token+"? ")
+      try:
+         player_answer = int(player_answer)
+      except:
+         print("Некорректный ввод. Вы уверены, что ввели число?")
+         continue
+      if player_answer >= 1 and player_answer <= 9:
+         if(str(board[player_answer-1]) not in "XO"):
+            board[player_answer-1] = player_token
+            valid = True
+         else:
+            print("Эта клетка уже занята!")
+      else:
+        print("Некорректный ввод. Введите число от 1 до 9.")
 
-def inp(x, y):
-    while True:
-        x = input("x:")
-        if x == "1" or x == "2" or x == "3":
-            x = int(x)
-            break
+def check_win(board):
+   win_coord = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
+   for each in win_coord:
+       if board[each[0]] == board[each[1]] == board[each[2]]:
+          return board[each[0]]
+   return False
+
+def main(board):
+    counter = 0
+    win = False
+    while not win:
+        draw_board(board)
+        if counter % 2 == 0:
+           take_input("X")
         else:
-            print("Select a coordinate х: 1, 2 or 3!")
-            mapxo()
-    while True:
-        y = input("y:")
-        if y == "1" or y == "2" or y == "3":
-            y = int(y)
+           take_input("O")
+        counter += 1
+        if counter > 4:
+           tmp = check_win(board)
+           if tmp:
+              print(tmp, "выиграл!")
+              win = True
+              break
+        if counter == 9:
+            print("Ничья!")
             break
-        else:
-            print("Select a coordinate y: 1, 2 or 3!")
-            mapxo()
-    return x, y
-# проверка правильности ввода координат
+    draw_board(board)
+main(board)
 
-mapxo()
-
-x, y = inp(None, None)
-print(x, y)
-
-xodo(x, y, first)
-print()
-xodo(x, y, second)
-print()
+input("Нажмите Enter для выхода!")
